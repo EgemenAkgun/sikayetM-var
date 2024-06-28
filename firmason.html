@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>şikayetMİvar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+  body {
+        margin: 0; /* Sayfa kenar boşluğunu kaldırma */
+        padding: 0; /* Sayfa içerisindeki boşluğu kaldırma */
+        height: 100vh; /* Sayfanın yüksekliğini ekran yüksekliği kadar yapma */
+            
+        /* Arka plan rengi veya başka bir stil tanımlama */
+        background-color: #f0f0f0;
+            
+        /* Arka plan resmi eklemek için background kullanma */
+        background: url('arka.jpeg') center/cover no-repeat fixed;
+    }
+
+    .navbar {
+        background-color: #6c757d;
+        
+    }
+
+    .navbar-brand, .nav-link {
+        color: gray;
+    }
+
+    h1 {
+        color: darkblue;
+        margin-left: 20px;
+    }
+    #searchInput{
+        width: 41%;
+    }
+    .search-container{
+        margin-left: 20px;
+        
+    }
+
+
+    .list-group-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    .list-group-item:hover {
+        background-color:#add8e6;
+    border-radius: 10px;
+    }
+
+
+    .btn-primary, .btn-success {
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    }
+
+    .footer {
+        background-color: transparent;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+    }
+    #complaintList{
+        margin-left: 20px;
+    }
+    .navbar a:hover{
+    background-color:#add8e6;
+    border-radius: 10px; /* Köşesiz oval arka plan için değeri ayarlama */
+}
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: background-color 0.3s ease; /* Animasyon ekleme */
+}
+#logOut{
+    background-color: red;
+    text-align: center;
+}
+#logOut:hover{
+    background-color: rgb(178, 30, 30);
+    border-radius: 10px; /* Köşesiz oval arka plan için değeri ayarlayama */
+}
+    
+
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 10px;
+        }
+    }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="deneme.home.html">
+            <img src="logo.jpeg" height="80px" alt="şikayetMİvar">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="deneme.home.html">Anasayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="firmason.html">Şikayetler</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="openProfileModal">
+                        <img src="profil.jpeg" alt="Profil Resmi" class="profile-image" id="profile"> Profil
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Profil modalı -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Profil Bilgileri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="profileInfo">
+                <!-- Profil bilgileri buraya gelecek -->
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+<div class="container">
+    <h1 id="baslik"><b>Şikayetler</b></h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="form-control" placeholder="Şikayet Ara..." oninput="searchComplaints()">
+    </div>
+
+    <div class="card-deck" id="complaintList">
+        <!-- Dinamik olarak eklenecek şikayetler buraya eklenecek -->
+    </div>
+
+</div>
+<!-- Footer -->
+<div class="footer">
+    © 2023 ŞikayetMİvar. Tüm hakları saklıdır.
+</div>
+
+<!-- Bootstrap ve jQuery CDN'leri -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    var complaints = [
+        { date: "01.01.2023", owner: "Egemen Akgün", description: "Ürünle ilgili bir sorun yaşanıyor.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "15.08.2023", owner: "Yasin Bera Şahin", description: "Hizmet kalitesinden memnun değilim.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "04.03.2023", owner: "Ayşen Altındiş", description: "Teslimat gecikti.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "21.05.2023", owner: "Hamdi Söymen", description: "Fiyatlar çok yüksek.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "09.10.2023", owner: "Oğulcan Nalcı", description: "Personel ile iletişim zor.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "07.07.2023", owner: "Furkan Derdiyok", description: "Ürün ambalajı zarar görmüş.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "08.12.2023", owner: "Latife Akgün", description: "Garanti süresi dolmadan arıza.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "25.12.2023", owner: "Egemen Korkmaz", description: "İnternet sitesi hatalı.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "15.01.2023", owner: "Serdar Dursun", description: "Ürün rengi beklediğimden farklı.", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        { date: "15.01.2023", owner: "Mert Hakan Yanda", description: "Ürün bedeni yanlış", status: "Açık", response: "Firma Cevabı: Henüz bir cevap verilmedi." },
+        // Diğer şikayetler buraya eklenecek
+    ];
+
+    // Şikayetleri ekrana dinamik olarak ekleyen fonksiyon
+    function renderComplaints() {
+        var complaintList = document.getElementById("complaintList");
+        complaintList.innerHTML = ""; // Önceki içeriği temizler
+
+        complaints.forEach(function(complaint, index) {
+            var li = document.createElement("li");
+            li.className = "list-group-item";
+            li.innerHTML = `
+                <span class="font-weight-bold">Tarih:</span> ${complaint.date}
+                <br>
+                <span class="font-weight-bold">Şikayet Sahibi:</span> ${complaint.owner}
+                <br>
+                <span class="font-weight-bold">Açıklama:</span> ${complaint.description}
+                <br>
+                <span class="font-weight-bold">Cevaplanma Durumu:</span> ${complaint.answerStatus || "Cevaplanmadı"}
+                <br>
+                <span class="font-weight-bold">Kapalı/Açık Durumu:</span> ${complaint.closeStatus || "Açık"}
+                <br>
+                <span class="font-weight-bold">Firma Cevabı:</span> ${complaint.response}
+                <br>
+                <button class="btn btn-success btn-sm" onclick="answerComplaint(${index})">Cevapla</button>
+                <button class="btn btn-danger btn-sm" onclick="closeComplaint(${index})">Kapat</button>
+            `;
+            complaintList.appendChild(li);
+        });
+    }
+
+    // Sayfa yüklendiğinde şikayetleri oluşturur
+    window.onload = function() {
+        renderComplaints();
+    };
+
+    document.getElementById('openProfileModal').addEventListener('click', function() {
+    // Profil modalını açar
+    $('#profileModal').modal('show');
+
+    // Profil bilgilerini modal içine yerleştir
+    document.getElementById('profileInfo').innerHTML = `
+        <p><strong>Firma Adı:</strong> Ege Plastik</p>
+        <p><strong>E-posta:</strong> eplas@gmail.com</p>
+        <p><strong>Adres:</strong> Akgün mah. 587/45 sok. no:45 YATAĞAN/MUĞLA</p>
+        <p><strong>İletişim:</strong> +90 232 334 3434</p>
+        <a href="deneme.home.html"><button id="logOut">ÇIKIŞ YAP</button></a>
+    `;
+    });
+
+    // Cevap verme fonksiyonu
+    function answerComplaint(index) {
+        var response = prompt("Şikayete cevap yazın:");
+        if (response !== null) {
+            // Kullanıcı cevap yazdıysa, cevabı günceller
+            complaints[index].response = "Firma Cevabı: " + response;
+            // Cevap durumunu günceller
+            complaints[index].answerStatus = "Cevaplandı";
+            // Şikayet listesini günceller
+            renderComplaints();
+        }
+    }
+
+    // Şikayeti kapatma fonksiyonu
+    function closeComplaint(index) {
+        // Kapalı/Açık durumunu günceller
+        complaints[index].closeStatus = "Kapatıldı";
+        // Şikayet listesini günceller
+        renderComplaints();
+    }
+
+    function searchComplaints() {
+        // Burada şikayet arama işlemleri yapılabilir.
+        var input, filter, ul, li, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("complaintList");
+        li = ul.getElementsByTagName("li");
+
+        for (i = 0; i < li.length; i++) {
+            txtValue = li[i].textContent || li[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
